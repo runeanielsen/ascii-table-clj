@@ -2,9 +2,7 @@
   (:require [clojure.string :as str]))
 
 (def header
-  (->> "Dec  Hex  Oct  C"
-       (repeat 4)
-       (str/join " | ")))
+  (str/join " | " (repeat 4 "Dec  Hex  Oct  C")))
 
 (def table-rows
   (for [i (range 32)]
@@ -19,14 +17,10 @@
   (format "%3d %4o %4x %2c" n n n (get-display-char n)))
 
 (defn format-row [xs]
-  (->> xs
-       (map format-block)
-       (str/join " | ")))
+  (str/join " | " (map format-block xs)))
 
 (defn ascii-table []
-  (str/join
-   \newline
-   (conj (map format-row table-rows) header)))
+  (str/join "\n" (conj (map format-row table-rows) header)))
 
 (comment
   (println (ascii-table)))
